@@ -1,0 +1,4 @@
+name = "midgard::systems::actions::actions"
+reads = []
+writes = ["Player", "Game"]
+init_calldata = []

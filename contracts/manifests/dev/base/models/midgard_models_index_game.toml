@@ -1,0 +1,70 @@
+kind = "DojoModel"
+class_hash = "0x6193457779d75a694f30683e5854d7d62142f32704fb228ac18fe3ec7503eba"
+original_class_hash = "0x6193457779d75a694f30683e5854d7d62142f32704fb228ac18fe3ec7503eba"
+abi = "manifests/dev/abis/base/models/midgard_models_index_game.json"
+name = "midgard::models::index::game"
+
+[[members]]
+name = "id"
+type = "u32"
+key = true
+
+[[members]]
+name = "over"
+type = "bool"
+key = false
+
+[[members]]
+name = "score"
+type = "u8"
+key = false
+
+[[members]]
+name = "action"
+type = "u8"
+key = false
+
+[[members]]
+name = "gold"
+type = "u16"
+key = false
+
+[[members]]
+name = "buildings"
+type = "u64"
+key = false
+
+[[members]]
+name = "constructions"
+type = "u64"
+key = false
+
+[[members]]
+name = "structures"
+type = "u64"
+key = false
+
+[[members]]
+name = "builders"
+type = "u64"
+key = false
+
+[[members]]
+name = "workers"
+type = "u64"
+key = false
+
+[[members]]
+name = "works"
+type = "felt252"
+key = false
+
+[[members]]
+name = "seed"
+type = "felt252"
+key = false
+
+[[members]]
+name = "player_id"
+type = "felt252"
+key = false

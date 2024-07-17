@@ -1,0 +1,20 @@
+kind = "DojoModel"
+class_hash = "0x54e49b0296898636c3b8ab4806f11488f829738f4d00a685e30db979d812958"
+original_class_hash = "0x54e49b0296898636c3b8ab4806f11488f829738f4d00a685e30db979d812958"
+abi = "manifests/dev/abis/base/models/midgard_models_index_player.json"
+name = "midgard::models::index::player"
+
+[[members]]
+name = "id"
+type = "felt252"
+key = true
+
+[[members]]
+name = "game_id"
+type = "u32"
+key = false
+
+[[members]]
+name = "name"
+type = "felt252"
+key = false

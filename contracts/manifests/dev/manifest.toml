@@ -1,0 +1,130 @@
+[world]
+kind = "WorldContract"
+class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+original_class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
+abi = "manifests/dev/abis/deployments/dojo_world_world.json"
+address = "0x28dbc6ef6ad81a0b8d4e2166419ee3efea481fd3c2f2c6aa57c307179838ce8"
+transaction_hash = "0x3bc3b9cf1a33c1e28dca137de9c63694dd904a536eb60cbda840a84cb5e8199"
+block_number = 3
+seed = "midgard"
+name = "dojo::world::world"
+
+[world.metadata]
+profile_name = "dev"
+rpc_url = "http://localhost:5050/"
+
+[base]
+kind = "Class"
+class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+original_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+name = "dojo::base::base"
+
+[[contracts]]
+kind = "DojoContract"
+address = "0x613f09a6da4562afcb319c01f189a0b37bbd819f89b281277a64bb37747e0b9"
+class_hash = "0x56bf6e3e51b3d9379f09d8603a5d89c62c84cf3914e4fe65ef45dc47f02ba4a"
+original_class_hash = "0x56bf6e3e51b3d9379f09d8603a5d89c62c84cf3914e4fe65ef45dc47f02ba4a"
+base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
+abi = "manifests/dev/abis/deployments/contracts/midgard_systems_actions_actions.json"
+reads = []
+writes = [
+    "Player",
+    "Game",
+]
+computed = []
+init_calldata = []
+name = "midgard::systems::actions::actions"
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x6193457779d75a694f30683e5854d7d62142f32704fb228ac18fe3ec7503eba"
+original_class_hash = "0x6193457779d75a694f30683e5854d7d62142f32704fb228ac18fe3ec7503eba"
+abi = "manifests/dev/abis/deployments/models/midgard_models_index_game.json"
+name = "midgard::models::index::game"
+
+[[models.members]]
+name = "id"
+type = "u32"
+key = true
+
+[[models.members]]
+name = "over"
+type = "bool"
+key = false
+
+[[models.members]]
+name = "score"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "action"
+type = "u8"
+key = false
+
+[[models.members]]
+name = "gold"
+type = "u16"
+key = false
+
+[[models.members]]
+name = "buildings"
+type = "u64"
+key = false
+
+[[models.members]]
+name = "constructions"
+type = "u64"
+key = false
+
+[[models.members]]
+name = "structures"
+type = "u64"
+key = false
+
+[[models.members]]
+name = "builders"
+type = "u64"
+key = false
+
+[[models.members]]
+name = "workers"
+type = "u64"
+key = false
+
+[[models.members]]
+name = "works"
+type = "felt252"
+key = false
+
+[[models.members]]
+name = "seed"
+type = "felt252"
+key = false
+
+[[models.members]]
+name = "player_id"
+type = "felt252"
+key = false
+
+[[models]]
+kind = "DojoModel"
+class_hash = "0x54e49b0296898636c3b8ab4806f11488f829738f4d00a685e30db979d812958"
+original_class_hash = "0x54e49b0296898636c3b8ab4806f11488f829738f4d00a685e30db979d812958"
+abi = "manifests/dev/abis/deployments/models/midgard_models_index_player.json"
+name = "midgard::models::index::player"
+
+[[models.members]]
+name = "id"
+type = "felt252"
+key = true
+
+[[models.members]]
+name = "game_id"
+type = "u32"
+key = false
+
+[[models.members]]
+name = "name"
+type = "felt252"
+key = false
