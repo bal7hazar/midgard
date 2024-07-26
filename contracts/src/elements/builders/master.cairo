@@ -5,7 +5,7 @@ use midgard::elements::builders::interface::{BuilderTrait, Resource, ResourceTra
 impl Builder of BuilderTrait {
     #[inline]
     fn count() -> u8 {
-        16
+        8
     }
 
     #[inline]

@@ -113,8 +113,7 @@ impl GameImpl of GameTrait {
         self.assert_is_available();
 
         // [Check] Builder is hireable and not already hired
-        let builder: Builder = BuilderDeck::get(builder_id);
-        let index = builder.index();
+        let index = BuilderTrait::index(builder_id);
         self.assert_is_hireable(index);
         self.assert_not_hired(index);
 
@@ -137,8 +136,7 @@ impl GameImpl of GameTrait {
         self.assert_is_available();
 
         // [Check] Building is selectable and not already selected
-        let building: Building = BuildingDeck::get(building_id);
-        let index = building.index();
+        let index = BuildingTrait::index(building_id);
         self.assert_is_selectable(index);
         self.assert_not_selected(index);
 
@@ -162,13 +160,12 @@ impl GameImpl of GameTrait {
 
         // [Check] Builder is hired and not already at work
         let builder: Builder = BuilderDeck::get(builder_id);
-        let builder_index = builder.index();
+        let builder_index = BuilderTrait::index(builder_id);
         self.assert_is_hired(builder_index);
         self.assert_not_working(builder_index);
 
         // [Check] Building is selected and not already built
-        let building: Building = BuildingDeck::get(building_id);
-        let building_index = building.index();
+        let building_index = BuildingTrait::index(building_id);
         self.assert_is_selected(building_index);
         self.assert_not_built(building_index);
 
@@ -227,7 +224,7 @@ impl GameImpl of GameTrait {
         };
         // [Effect] Build construction into structure if afforded
         if afforded {
-            let index = building.index();
+            let index = BuildingTrait::index(building_id);
             self.structures = Bitmap::set_bit_at(self.structures, index, true);
             // [Effect] Update game score
             self.score = self.score();
@@ -482,5 +479,13 @@ mod tests {
         game.action = 0;
         game.assess_over();
         assert_eq!(game.over, true);
+    }
+
+    #[test]
+    fn test_game_builder_is_hireable() {
+        let mut game = GameTrait::new(GAME_ID, PLAYER_ID, SEED);
+        game.start();
+        game.builders = 0b000100110111010000111000100101010101100001000100;
+        game.hire(3);
     }
 }

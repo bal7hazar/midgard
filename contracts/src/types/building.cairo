@@ -45,8 +45,7 @@ enum Building {
 #[generate_trait]
 impl BuildingImpl of BuildingTrait {
     #[inline]
-    fn index(self: Building) -> u8 {
-        let id: u8 = self.into();
+    fn index(id: u8) -> u8 {
         id - 1
     }
 
