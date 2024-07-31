@@ -3,10 +3,10 @@ kind = "WorldContract"
 class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
 original_class_hash = "0x3f63cecdc4964acafb921ba2934c6507d1b3c344edb64c2762cf08053169ab9"
 abi = "manifests/slot/abis/deployments/dojo_world_world.json"
-address = "0x26663f285f4571e8b1f980cb6537f1a6eeb63291e2aed8216bf4ea5678ffc8a"
-transaction_hash = "0x413b5f2dc64f4d9e5c5e07e2ff83b6ca45a1894cf04dad1fd063d56ecbfaa2b"
-block_number = 3
-seed = "v0"
+address = "0x5928c4dc0f4716dae618377b8c8325824813a01458a359d4329ced00b293ead"
+transaction_hash = "0x2ac4fda21d66d2a0611d7579bbdb5bc139dfa7b2a2ec5434d579388f5f42424"
+block_number = 12
+seed = "v1"
 name = "dojo::world::world"
 
 [world.metadata]
@@ -21,13 +21,16 @@ name = "dojo::base::base"
 
 [[contracts]]
 kind = "DojoContract"
-address = "0x787168dc55e0c990826ddbc697e9290fc6e90648be417484321697dd1161899"
+address = "0x57419d466409888bcf7c4bef53060927046725472b361f7f1f93e35bd597ce8"
 class_hash = "0x5285f57dcc4cba12c9672f416775d8763c429dcb378edc5dba9c69ee2823dce"
 original_class_hash = "0x5285f57dcc4cba12c9672f416775d8763c429dcb378edc5dba9c69ee2823dce"
 base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/slot/abis/deployments/contracts/midgard_systems_actions_actions.json"
 reads = []
-writes = []
+writes = [
+    "Player",
+    "Game",
+]
 computed = []
 init_calldata = []
 name = "midgard::systems::actions::actions"

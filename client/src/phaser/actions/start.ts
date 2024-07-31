@@ -12,18 +12,7 @@ export default class Start extends Button {
   update() {
     if (this.visible && !PlayerManager.getInstance().player) {
       this.setVisible(false);
-    } else if (
-      !this.disabled &&
-      (!PlayerManager.getInstance().player || !!GameManager.getInstance().game)
-    ) {
-      this.setEnable(true);
-      this.setVisible(true);
-    } else if (
-      this.disabled &&
-      !!PlayerManager.getInstance().player &&
-      !GameManager.getInstance().game
-    ) {
-      this.setEnable(true);
+    } else if (!this.visible && !!PlayerManager.getInstance().player) {
       this.setVisible(true);
     }
     super.update();
