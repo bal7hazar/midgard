@@ -40,4 +40,4 @@ export const Worker: BuilderInterface = class Worker {
         return new Resource(0, 0, 0, 0);
     }
   }
-}
+};

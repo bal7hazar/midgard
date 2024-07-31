@@ -1,7 +1,8 @@
 import { Game } from "@/dojo/game/models/game";
-import ShopManager from "./shop";
 import { BuilderDeck } from "@/dojo/game/types/deck";
 import { BuildingDeck } from "@/dojo/game/types/deck";
+import SellManager from "./sell";
+import BuyManager from "./buy";
 
 class GameManager {
   static instance: GameManager;
@@ -11,9 +12,13 @@ class GameManager {
   public select: (buildingId: number) => void = () => {};
   public send: (builderId: number, buildingId: number) => void = () => {};
   public buy: (quantity: number) => void = () => {};
+  public sell: (quantity: number) => void = () => {};
   private builder: number = 0;
   private building: number = 0;
-  private selected: { builder: number, building: number } = { builder: 0, building: 0 };
+  private selected: { builder: number; building: number } = {
+    builder: 0,
+    building: 0,
+  };
 
   constructor() {
     if (GameManager.instance) {
@@ -34,19 +39,14 @@ class GameManager {
     this.game = game;
     this.builder = game.builders ? game.builders[0] : 0;
     this.building = game.buildings ? game.buildings[0] : 0;
-    this.selected = {
-      builder: game.workers ? game.workers[0] : 0,
-      building: game.constructions ? game.constructions[0] : 0,
-    };
-    console.log('works', game.works);
   }
 
   getBuilderId() {
     return this.builder;
   }
 
-  getBuilder() {
-    return BuilderDeck.get(this.builder);
+  getBuilder(id: number) {
+    return BuilderDeck.get(id);
   }
 
   getBuilderIndex() {
@@ -95,7 +95,7 @@ class GameManager {
 
   getBuilderResource(builderId: number) {
     const version = BuilderDeck.getVersion(builderId);
-    return BuilderDeck.get(builderId).getResource(version); 
+    return BuilderDeck.get(builderId).getResource(version);
   }
 
   isBuilt(id: number) {
@@ -123,13 +123,13 @@ class GameManager {
   setSelectedBuilder(index: number) {
     this.selected.builder = index;
   }
-  
+
   setStart(action: () => void) {
     this.start = action;
   }
 
   setHire(action: (builderId: number) => void) {
-    this.hire = action
+    this.hire = action;
   }
 
   setSelect(action: (buildingId: number) => void) {
@@ -144,8 +144,31 @@ class GameManager {
     this.buy = action;
   }
 
+  setSell(action: (quantity: number) => void) {
+    this.sell = action;
+  }
+
+  canSend() {
+    const builderId = this.getSelectedBuilderId();
+    const buildingId = this.getSelectedBuildingId();
+    const isIdle = this.isIdle(builderId);
+    const isBuilt = this.isBuilt(buildingId);
+    const builder = GameManager.getInstance().getBuilder(builderId);
+    const cost = builder.getCost();
+    return (
+      !!this.game &&
+      !this.game.isOver() &&
+      !!this.send &&
+      !!builderId &&
+      !!buildingId &&
+      isIdle &&
+      !isBuilt &&
+      this.game.gold >= cost
+    );
+  }
+
   callStart() {
-    if (!this.start || !!this.game) return;
+    if (!this.start) return;
     this.start();
   }
 
@@ -160,13 +183,18 @@ class GameManager {
   }
 
   callSend() {
-    if (!this.send || !this.game) return;
+    if (!this.canSend()) return;
     this.send(this.getSelectedBuilderId(), this.getSelectedBuildingId());
   }
 
   callBuy() {
     if (!this.buy || !this.game) return;
-    this.buy(ShopManager.getInstance().getAction());
+    this.buy(BuyManager.getInstance().getAction());
+  }
+
+  callSell() {
+    if (!this.sell || !this.game) return;
+    this.sell(SellManager.getInstance().getGold());
   }
 }
 

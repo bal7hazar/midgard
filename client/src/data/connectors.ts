@@ -8,9 +8,6 @@ const actions_contract_address = getContractByName(
   "midgard::systems::actions::actions",
 )?.address;
 
-const cartridgeConnector = new CartridgeConnector(
-  [],
-  { theme: "midgard" },
-);
+const cartridgeConnector = new CartridgeConnector([], { theme: "midgard" });
 
 export default cartridgeConnector;

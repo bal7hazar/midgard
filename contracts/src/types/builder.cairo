@@ -42,13 +42,13 @@ impl BuilderImpl of BuilderTrait {
     }
 
     #[inline]
-    fn resource(self: Builder, id: u8) -> Resource {
+    fn resource(self: Builder, version: u8) -> Resource {
         match self {
             Builder::None => core::zeroable::Zeroable::zero(),
-            Builder::Trainee => builders::trainee::Builder::resource(id),
-            Builder::Worker => builders::worker::Builder::resource(id),
-            Builder::Expert => builders::expert::Builder::resource(id),
-            Builder::Master => builders::master::Builder::resource(id),
+            Builder::Trainee => builders::trainee::Builder::resource(version),
+            Builder::Worker => builders::worker::Builder::resource(version),
+            Builder::Expert => builders::expert::Builder::resource(version),
+            Builder::Master => builders::master::Builder::resource(version),
         }
     }
 }

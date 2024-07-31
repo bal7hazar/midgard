@@ -1,8 +1,15 @@
-import Phaser from 'phaser';
+import Phaser from "phaser";
 
 class AnimationManager {
-  public pawnColors: string[] = ['blue', 'purple', 'red', 'yellow'];
-  public pawnCategories: string[] = ['idle', 'move', 'hit', 'cut', 'carry-idle', 'carry-move'];
+  public pawnColors: string[] = ["blue", "purple", "red", "yellow"];
+  public pawnCategories: string[] = [
+    "idle",
+    "move",
+    "hit",
+    "cut",
+    "carry-idle",
+    "carry-move",
+  ];
   static instance: AnimationManager;
 
   constructor() {
@@ -26,7 +33,10 @@ class AnimationManager {
       for (let cat of this.pawnCategories) {
         scene.anims.create({
           key: `pawn-${color}-${cat}`,
-          frames: scene.anims.generateFrameNumbers(`pawn-${color}`, { start: 0 + offset, end: 5 + offset }),
+          frames: scene.anims.generateFrameNumbers(`pawn-${color}`, {
+            start: 0 + offset,
+            end: 5 + offset,
+          }),
           frameRate: 10,
           repeat: -1,
         });

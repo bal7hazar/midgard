@@ -28,4 +28,4 @@ export const Trainee: BuilderInterface = class Trainee {
         return new Resource(0, 0, 0, 0);
     }
   }
-}
+};

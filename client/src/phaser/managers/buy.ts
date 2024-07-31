@@ -1,23 +1,23 @@
 import GameManager from "./game";
 
-class ShopManager {
-  static instance: ShopManager;
+class BuyManager {
+  static instance: BuyManager;
   private gold: number = 5;
   private action: number = 1;
   private step: number = 5;
 
   constructor() {
-    if (ShopManager.instance) {
-      return ShopManager.instance;
+    if (BuyManager.instance) {
+      return BuyManager.instance;
     }
-    ShopManager.instance = this;
+    BuyManager.instance = this;
   }
 
   static getInstance() {
-    if (!ShopManager.instance) {
-      ShopManager.instance = new ShopManager();
+    if (!BuyManager.instance) {
+      BuyManager.instance = new BuyManager();
     }
-    return ShopManager.instance;
+    return BuyManager.instance;
   }
 
   getGold() {
@@ -59,4 +59,4 @@ class ShopManager {
   }
 }
 
-export default ShopManager;
+export default BuyManager;

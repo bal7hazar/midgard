@@ -22,9 +22,9 @@ export default defineConfig({
         "/assets/masked-icon.svg",
       ],
       manifest: {
-        name: "zKube",
-        short_name: "zKube",
-        description: "Solo strategy block game.",
+        name: "Midgard",
+        short_name: "Midgard",
+        description: "Solo strategy game.",
         theme_color: "#000000",
         icons: [],
       },

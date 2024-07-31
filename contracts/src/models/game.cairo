@@ -34,7 +34,7 @@ mod errors {
     const GAME_BUILDING_NOT_SELECTABLE: felt252 = 'Game: building not selectable';
     const GAME_BUILDING_ALREADY_BUILT: felt252 = 'Game: building already built';
     const GAME_WORKER_NOT_FREE: felt252 = 'Game: worker not free';
-    const GAME_COST_NOT_AFFORDABLE: felt252 = 'Game: cost is not affordable';
+    const GAME_COST_NOT_AFFORDABLE: felt252 = 'Game: cost is not buyable';
 }
 
 #[generate_trait]
@@ -169,12 +169,12 @@ impl GameImpl of GameTrait {
         self.assert_is_selected(building_index);
         self.assert_not_built(building_index);
 
-        // [Check] Builder cost is affordable
+        // [Check] Builder cost is buyable
         let cost: u16 = builder.cost().into();
-        self.assert_is_affordable(cost);
+        self.assert_is_buyable(cost);
 
         // [Effect] Send builder to the construction site
-        let works: u256 = self.workers.into();
+        let works: u256 = self.works.into();
         let works = Packer::set(works, builder_index, constants::WORK_BIT_COUNT, building_id);
         self.works = works.try_into().unwrap();
 
@@ -189,13 +189,30 @@ impl GameImpl of GameTrait {
 
     #[inline]
     fn buy(ref self: Game, quantity: u8) {
-        // [Check] Action is affordable
+        // [Check] Action is buyable
         let cost: u16 = quantity.into() * constants::DEFAULT_ACTION_COST;
-        self.assert_is_affordable(cost);
+        self.assert_is_buyable(cost);
 
         // [Effect] Buy action points
         self.gold -= cost;
         self.action += quantity;
+
+        // [Effect] Assess game over
+        self.assess_over();
+    }
+
+    #[inline]
+    fn sell(ref self: Game, quantity: u8) {
+        // [Check] Action is sellable
+        let cost: u8 = quantity * constants::DEFAULT_GOLD_COST;
+        self.assert_is_sellable(cost);
+
+        // [Effect] Buy action points
+        self.gold += cost.into();
+        self.action -= quantity;
+
+        // [Effect] Assess game over
+        self.assess_over();
     }
 
     fn assess_built(ref self: Game, building_id: u8) {
@@ -206,28 +223,35 @@ impl GameImpl of GameTrait {
         let mut provided: Resource = core::zeroable::Zeroable::zero();
         let works: u256 = self.works.into();
         let mut works: Array<u8> = Packer::unpack(works, constants::WORK_BIT_COUNT);
+        let mut updated_works: Array<u8> = array![];
         let mut builder_id = 1;
-        let afforded = loop {
+        loop {
             match works.pop_front() {
                 Option::Some(id) => {
                     if id == building_id {
                         let builder: Builder = BuilderDeck::get(builder_id);
-                        provided = provided + builder.resource(builder_id);
-                        if provided >= requirement {
-                            break true;
-                        }
+                        let version: u8 = BuilderDeck::version(builder_id);
+                        provided = provided + builder.resource(version);
+                        updated_works.append(0);
+                    } else {
+                        updated_works.append(id);
                     }
                     builder_id += 1;
                 },
-                Option::None => { break false; },
+                Option::None => { break; },
             }
         };
         // [Effect] Build construction into structure if afforded
-        if afforded {
+        if provided >= requirement {
             let index = BuildingTrait::index(building_id);
             self.structures = Bitmap::set_bit_at(self.structures, index, true);
+            // [Effect] Update gold
+            self.gold += building.gold().into();
             // [Effect] Update game score
             self.score = self.score();
+            // [Effect] Update works
+            let works: u256 = Packer::pack(updated_works, constants::WORK_BIT_COUNT);
+            self.works = works.try_into().unwrap();
         }
     }
 
@@ -292,8 +316,13 @@ impl GameAssert of AssertTrait {
     }
 
     #[inline]
-    fn assert_is_affordable(self: Game, cost: u16) {
+    fn assert_is_buyable(self: Game, cost: u16) {
         assert(self.gold >= cost, errors::GAME_COST_NOT_AFFORDABLE);
+    }
+
+    #[inline]
+    fn assert_is_sellable(self: Game, cost: u8) {
+        assert(self.action >= cost, errors::GAME_COST_NOT_AFFORDABLE);
     }
 
     #[inline]
@@ -430,10 +459,26 @@ mod tests {
     fn test_game_send() {
         let mut game = GameTrait::new(GAME_ID, PLAYER_ID, SEED);
         game.start();
-        game.hire(1);
+        game.hire(38);
         game.select(16);
+        assert_eq!(game.works, 0);
+        game.send(38, 16);
+        assert_eq!(game.works, 0x400000000000000000000000000000000000000000000000000000000);
+    }
+
+    #[test]
+    fn test_game_send_finish() {
+        let mut game = GameTrait::new(GAME_ID, PLAYER_ID, SEED);
+        game.start();
+        game.hire(1);
+        game.hire(18);
+        game.hire(31);
+        game.select(16);
+        assert_eq!(game.works, 0);
         game.send(1, 16);
-        assert_eq!(game.works, 16);
+        game.send(18, 16);
+        game.send(31, 16);
+        assert_eq!(game.works, 0);
     }
 
     #[test]

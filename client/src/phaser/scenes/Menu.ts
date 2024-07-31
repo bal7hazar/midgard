@@ -26,26 +26,32 @@ export class Menu extends Scene {
 
   init() {}
 
-  preload() {
-    AnimationManager.getInstance().addAnimations(this);
-    AudioManager.getInstance().addSounds(this);
-  }
+  preload() {}
 
   create() {
-    AudioManager.play(this, "theme-menu", true);
-
-    this.background = this.add.tileSprite(
-      this.renderer.width / 2,
-      this.renderer.height / 2,
-      this.renderer.width,
-      this.renderer.height,
-      "menu-bg"
-    ).setOrigin(0.5, 0.5);
+    this.background = this.add
+      .tileSprite(
+        this.renderer.width / 2,
+        this.renderer.height / 2,
+        this.renderer.width,
+        this.renderer.height,
+        "menu-bg",
+      )
+      .setOrigin(0.5, 0.5);
     this.background.setTilePosition(0, 0);
-    if (this.background.width * BACKGROUND_HEIGHT / BACKGROUND_WIDTH < this.background.height) {
-      this.background.setSize(this.background.height * BACKGROUND_WIDTH/BACKGROUND_HEIGHT, this.background.height);
+    if (
+      (this.background.width * BACKGROUND_HEIGHT) / BACKGROUND_WIDTH <
+      this.background.height
+    ) {
+      this.background.setSize(
+        (this.background.height * BACKGROUND_WIDTH) / BACKGROUND_HEIGHT,
+        this.background.height,
+      );
     } else {
-      this.background.setSize(this.background.width, this.background.width * BACKGROUND_HEIGHT / BACKGROUND_WIDTH);
+      this.background.setSize(
+        this.background.width,
+        (this.background.width * BACKGROUND_HEIGHT) / BACKGROUND_WIDTH,
+      );
     }
     this.background.alpha = 0.3;
 
@@ -60,10 +66,18 @@ export class Menu extends Scene {
       })
       .setOrigin(0.5);
 
-    this.pawnLeft = this.add.sprite(this.renderer.width / 2 - 128, this.renderer.height / 2, "pawn-red");
+    this.pawnLeft = this.add.sprite(
+      this.renderer.width / 2 - 128,
+      this.renderer.height / 2,
+      "pawn-red",
+    );
     this.pawnLeft.play("pawn-red-hit");
 
-    this.pawnRight = this.add.sprite(this.renderer.width / 2 + 128, this.renderer.height / 2, "pawn-blue");
+    this.pawnRight = this.add.sprite(
+      this.renderer.width / 2 + 128,
+      this.renderer.height / 2,
+      "pawn-blue",
+    );
     this.pawnRight.flipX = true;
     this.pawnRight.play("pawn-blue-hit");
 
@@ -78,16 +92,28 @@ export class Menu extends Scene {
       })
       .setOrigin(0.5);
 
-    this.signup = new Create(this, this.renderer.width / 2, this.renderer.height / 2 + 100);
+    this.signup = new Create(
+      this,
+      this.renderer.width / 2,
+      this.renderer.height / 2 + 100,
+    );
     this.add.existing(this.signup);
 
-    this.start = new Start(this, this.renderer.width / 2, this.renderer.height / 2 + 100);
+    this.start = new Start(
+      this,
+      this.renderer.width / 2,
+      this.renderer.height / 2 + 100,
+    );
     this.add.existing(this.start);
 
-    this.credits = new Credits(this, this.renderer.width / 2, this.renderer.height / 2 + 175);
+    this.credits = new Credits(
+      this,
+      this.renderer.width / 2,
+      this.renderer.height / 2 + 175,
+    );
     this.add.existing(this.credits);
 
-    this.scale.on('resize', this.resize, this);
+    this.scale.on("resize", this.resize, this);
     EventBus.emit("current-scene-ready", this);
   }
 
@@ -104,7 +130,12 @@ export class Menu extends Scene {
     }
   }
 
-  resize(gameSize: { width: number, height: number }, baseSize: number, displaySize: number, resolution: number) {
+  resize(
+    gameSize: { width: number; height: number },
+    baseSize: number,
+    displaySize: number,
+    resolution: number,
+  ) {
     const width = gameSize.width;
     const height = gameSize.height;
     this.title?.setPosition(width / 2, height / 3);
@@ -116,10 +147,16 @@ export class Menu extends Scene {
     this.credits?.setPosition(width / 2, height / 2 + 175);
 
     // Background
-    if (width * BACKGROUND_HEIGHT / BACKGROUND_WIDTH < height) {
-      this.background?.setSize(height * BACKGROUND_WIDTH/BACKGROUND_HEIGHT, height);
+    if ((width * BACKGROUND_HEIGHT) / BACKGROUND_WIDTH < height) {
+      this.background?.setSize(
+        (height * BACKGROUND_WIDTH) / BACKGROUND_HEIGHT,
+        height,
+      );
     } else {
-      this.background?.setSize(width, width * BACKGROUND_HEIGHT / BACKGROUND_WIDTH);
+      this.background?.setSize(
+        width,
+        (width * BACKGROUND_HEIGHT) / BACKGROUND_WIDTH,
+      );
     }
     this.background?.setPosition(width / 2, height / 2);
   }

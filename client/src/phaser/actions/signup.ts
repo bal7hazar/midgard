@@ -18,6 +18,7 @@ export default class Signup extends Button {
   }
 
   release(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Image) {
+    if (!this.pressed) return;
     super.release(pointer, gameObject);
     if (this.disabled) return;
     PlayerManager.getInstance().callSignup();

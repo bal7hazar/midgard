@@ -28,8 +28,15 @@ export default class Command extends Phaser.GameObjects.Container {
   private iconX: number;
   private iconY: number;
   private pressed: boolean = false;
-  
-  constructor(scene: Phaser.Scene, x: number, y: number, iconIdle: string, iconPressed: string, options?: Options) {
+
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    iconIdle: string,
+    iconPressed: string,
+    options?: Options,
+  ) {
     super(scene, x, y);
     this.iconIdle = iconIdle;
     this.iconPressed = iconPressed;
@@ -39,10 +46,10 @@ export default class Command extends Phaser.GameObjects.Container {
     this.iconX = options?.iconX || 0;
     this.iconY = options?.iconY || 16;
     this.callbacks = {
-      onRelease: options?.onRelease || function() {},
-      onPress: options?.onPress || function() {},
-      onEnter: options?.onEnter || function() {},
-      onLeave: options?.onLeave || function() {},
+      onRelease: options?.onRelease || function () {},
+      onPress: options?.onPress || function () {},
+      onEnter: options?.onEnter || function () {},
+      onLeave: options?.onLeave || function () {},
     };
 
     // Create button
@@ -55,7 +62,12 @@ export default class Command extends Phaser.GameObjects.Container {
     this.ribbon.on("pointerout", this.leave, this);
 
     // Create label
-    this.icon = new Phaser.GameObjects.Image(scene, this.iconX, this.iconY, this.iconIdle).setOrigin(0.5, 0.75);
+    this.icon = new Phaser.GameObjects.Image(
+      scene,
+      this.iconX,
+      this.iconY,
+      this.iconIdle,
+    ).setOrigin(0.5, 0.75);
 
     // Depths
     this.ribbon.setDepth(1);

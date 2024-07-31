@@ -17,6 +17,7 @@ trait IActions<TContractState> {
     fn select(self: @TContractState, world: IWorldDispatcher, building_id: u8);
     fn send(self: @TContractState, world: IWorldDispatcher, builder_id: u8, building_id: u8);
     fn buy(self: @TContractState, world: IWorldDispatcher, quantity: u8);
+    fn sell(self: @TContractState, world: IWorldDispatcher, quantity: u8);
 }
 
 // Contracts
@@ -115,6 +116,10 @@ mod actions {
 
         fn buy(self: @ContractState, world: IWorldDispatcher, quantity: u8,) {
             self.playable.buy(world, quantity)
+        }
+
+        fn sell(self: @ContractState, world: IWorldDispatcher, quantity: u8,) {
+            self.playable.sell(world, quantity)
         }
     }
 }

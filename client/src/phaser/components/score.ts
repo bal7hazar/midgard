@@ -12,26 +12,46 @@ export default class Score extends Phaser.GameObjects.Container {
     super(scene, x, y);
 
     // Images
-    this.banner = new Phaser.GameObjects.Image(scene, 0, 0, "banner-v-w4-h4");
-    this.carved = new Phaser.GameObjects.Image(scene, 0, 0, "carved-w2-h2");
-    this.ribbon = new Phaser.GameObjects.Image(scene, 0, 96, "ribbon-w4-h1-yellow");
-    this.icon = new Phaser.GameObjects.Image(scene, 0, -38, "icon-score").setDisplaySize(32, 32);
+    this.banner = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      0,
+      "banner-v-w4-h4",
+    ).setOrigin(0.5, 0);
+    this.carved = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      64,
+      "carved-w2-h2",
+    ).setOrigin(0.5, 0);
+    this.ribbon = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      196,
+      "ribbon-w4-h1-yellow",
+    ).setOrigin(0.5, 0);
+    this.icon = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      90,
+      "icon-score",
+    ).setDisplaySize(32, 32);
 
     // Labels
-    this.label = new Phaser.GameObjects.Text(scene, 0, 16, '0', {
+    this.label = new Phaser.GameObjects.Text(scene, 0, 108, "0", {
       fontFamily: "Norse",
       fontSize: 64,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
-    }).setOrigin(0.5, 0.5);
-    this.title = new Phaser.GameObjects.Text(scene, 0, 88, 'Score', {
+    }).setOrigin(0.5, 0);
+    this.title = new Phaser.GameObjects.Text(scene, 0, 198, "Score", {
       fontFamily: "Norse",
       fontSize: 36,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 0);
 
     // Depths
     this.banner.setDepth(1);
@@ -48,7 +68,7 @@ export default class Score extends Phaser.GameObjects.Container {
     this.add(this.label);
     this.add(this.title);
     this.add(this.icon);
-    this.sort('depth')
+    this.sort("depth");
   }
 
   update() {

@@ -23,11 +23,27 @@ export class Game {
     this.score = game.score;
     this.action = game.action;
     this.gold = game.gold;
-    this.builders = Packer.unpack(BigInt(game.builders) & ~BigInt(game.workers), BigInt(1)).map((value, index) => value ? index + 1 : 0).filter((id) => !!id);
-    this.buildings = Packer.unpack(BigInt(game.buildings) & ~BigInt(game.constructions), BigInt(1)).map((value, index) => value ? index + 1 : 0).filter((id) => !!id);
-    this.constructions = Packer.unpack(BigInt(game.constructions) & ~BigInt(game.structures), BigInt(1)).map((value, index) => value ? index + 1 : 0).filter((id) => !!id);
-    this.structures = Packer.unpack(BigInt(game.structures), BigInt(1)).map((value, index) => value ? index + 1 : 0).filter((id) => !!id);
-    this.workers = Packer.unpack(BigInt(game.workers), BigInt(1)).map((value, index) => value ? index + 1 : 0).filter((id) => !!id);
+    this.builders = Packer.unpack(
+      BigInt(game.builders) & ~BigInt(game.workers),
+      BigInt(1),
+    )
+      .map((value, index) => (value ? index + 1 : 0))
+      .filter((id) => !!id);
+    this.buildings = Packer.unpack(
+      BigInt(game.buildings) & ~BigInt(game.constructions),
+      BigInt(1),
+    )
+      .map((value, index) => (value ? index + 1 : 0))
+      .filter((id) => !!id);
+    this.constructions = Packer.unpack(BigInt(game.constructions), BigInt(1))
+      .map((value, index) => (value ? index + 1 : 0))
+      .filter((id) => !!id);
+    this.structures = Packer.unpack(BigInt(game.structures), BigInt(1))
+      .map((value, index) => (value ? index + 1 : 0))
+      .filter((id) => !!id);
+    this.workers = Packer.unpack(BigInt(game.workers), BigInt(1))
+      .map((value, index) => (value ? index + 1 : 0))
+      .filter((id) => !!id);
     this.works = Packer.sized_unpack(
       BigInt(game.works),
       BigInt(WORK_BIT_COUNT),
@@ -35,7 +51,6 @@ export class Game {
     );
     this.seed = game.seed;
     this.player_id = game.player_id.toString(16);
-    console.log('works', game.works, this.works);
   }
 
   public isOver(): boolean {

@@ -161,5 +161,26 @@ mod PlayableComponent {
             // [Effect] Update game
             store.set_game(game);
         }
+
+        fn sell(self: @ComponentState<TContractState>, world: IWorldDispatcher, quantity: u8) {
+            // [Setup] Datastore
+            let store: Store = StoreImpl::new(world);
+
+            // [Check] Player exists
+            let caller = get_caller_address();
+            let player = store.player(caller.into());
+            player.assert_exists();
+
+            // [Check] Game exists and not over
+            let mut game = store.game(player.game_id);
+            game.assert_exists();
+            game.assert_not_over();
+
+            // [Effect] Buy action point
+            game.sell(quantity);
+
+            // [Effect] Update game
+            store.set_game(game);
+        }
     }
 }

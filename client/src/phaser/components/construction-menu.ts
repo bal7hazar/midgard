@@ -11,30 +11,49 @@ export default class ConstructionMenu extends Phaser.GameObjects.Container {
   protected worker1: Phaser.GameObjects.Sprite;
   protected worker2: Phaser.GameObjects.Sprite;
 
-
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
 
     // Images
-    this.banner = new Phaser.GameObjects.Image(scene, 0, 0, "banner-v-w7-h5");
-    this.carved = new Phaser.GameObjects.Image(scene, 0, 0, "carved-w5-h3");
-    this.ribbon = new Phaser.GameObjects.Image(scene, 0, -128, "ribbon-w5-h1-yellow");
-    this.building = new Phaser.GameObjects.Image(scene, 0, -64, "building-castle-construction");
+    this.banner = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      0,
+      "banner-v-w7-h5",
+    ).setOrigin(0.5, 1);
+    this.carved = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -64,
+      "carved-w5-h3",
+    ).setOrigin(0.5, 1);
+    this.ribbon = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -256,
+      "ribbon-w5-h1-yellow",
+    ).setOrigin(0.5, 1);
+    this.building = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -96,
+      "building-castle-construction",
+    ).setOrigin(0.5, 1);
 
     // Create label
-    this.label = new Phaser.GameObjects.Text(scene, 0, -136, 'Constructions', {
+    this.label = new Phaser.GameObjects.Text(scene, 0, -276, "Constructions", {
       fontFamily: "Norse",
       fontSize: 32,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 1);
 
     // Add sprites
-    this.worker1 = scene.add.sprite(-96, -32, "pawn-yellow");
+    this.worker1 = scene.add.sprite(-96, -96, "pawn-yellow").setOrigin(0.5, 1);
     this.worker1.play("pawn-yellow-hit");
 
-    this.worker2 = scene.add.sprite(96, -32, "pawn-yellow");
+    this.worker2 = scene.add.sprite(96, -96, "pawn-yellow").setOrigin(0.5, 1);
     this.worker2.flipX = true;
     this.worker2.play("pawn-yellow-hit");
 
@@ -47,7 +66,7 @@ export default class ConstructionMenu extends Phaser.GameObjects.Container {
     this.banner.on("pointerout", this.leave, this);
 
     // Selector
-    this.selector = new Selector(scene, 0, 0, 288, 160);
+    this.selector = new Selector(scene, 0, -160, 288, 160);
 
     // Depths
     this.banner.setDepth(0);
@@ -68,7 +87,7 @@ export default class ConstructionMenu extends Phaser.GameObjects.Container {
     this.add(this.selector);
     this.add(this.worker1);
     this.add(this.worker2);
-    this.sort('depth')
+    this.sort("depth");
 
     // Default behavior
     this.worker1.anims.pause();

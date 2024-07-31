@@ -15,29 +15,53 @@ export default class Action extends Phaser.GameObjects.Container {
     super(scene, x, y);
 
     // Images
-    this.banner = new Phaser.GameObjects.Image(scene, 0, 0, "banner-left-w3-h4");
-    this.carved = new Phaser.GameObjects.Image(scene, 0, 32, "carved-w1-h1");
-    this.ribbon = new Phaser.GameObjects.Image(scene, -32, -32, "ribbon-w4-h1-yellow");
-    this.icon = new Phaser.GameObjects.Image(scene, -58, -40, "icon-action").setDisplaySize(24, 24);
+    this.banner = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      0,
+      "banner-left-w3-h4",
+    ).setOrigin(0.5, 0);
+    this.carved = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      128,
+      "carved-w1-h1",
+    ).setOrigin(0.5, 0);
+    this.ribbon = new Phaser.GameObjects.Image(
+      scene,
+      -32,
+      64,
+      "ribbon-w4-h1-yellow",
+    ).setOrigin(0.5, 0);
+    this.icon = new Phaser.GameObjects.Image(scene, -58, 76, "icon-action")
+      .setOrigin(0.5, 0)
+      .setDisplaySize(24, 24);
 
     // Commands
-    this.command = new Command(scene, 70, 32, "icon-right", "icon-right-pressed", { onRelease: this.handleOpen });
+    this.command = new Command(
+      scene,
+      70,
+      160,
+      "icon-right",
+      "icon-right-pressed",
+      { onRelease: this.handleOpen },
+    );
 
     // Create label
-    this.label = new Phaser.GameObjects.Text(scene, 0, 32, '0', {
+    this.label = new Phaser.GameObjects.Text(scene, 0, 132, "0", {
       fontFamily: "Norse",
       fontSize: 48,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 6,
-    }).setOrigin(0.5, 0.5);
-    this.title = new Phaser.GameObjects.Text(scene, 0, -40, 'Move', {
+    }).setOrigin(0.5, 0);
+    this.title = new Phaser.GameObjects.Text(scene, 0, 66, "ACTION", {
       fontFamily: "Norse",
       fontSize: 36,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 0);
 
     // Depths
     this.command.setDepth(0);
@@ -56,7 +80,7 @@ export default class Action extends Phaser.GameObjects.Container {
     this.add(this.title);
     this.add(this.command);
     this.add(this.icon);
-    this.sort('depth')
+    this.sort("depth");
   }
 
   update() {

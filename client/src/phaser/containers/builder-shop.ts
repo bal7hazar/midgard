@@ -22,8 +22,16 @@ export class BuilderShop extends Phaser.GameObjects.Container {
     this.add(this.button);
 
     // Events
-    EventBus.on("builder-pannel-visibility", () => this.setVisible(!this.visible), this.scene);
-    EventBus.on("builder-pannel-close", () => this.setVisible(false), this.scene);
+    EventBus.on(
+      "builder-pannel-visibility",
+      () => this.setVisible(!this.visible),
+      this.scene,
+    );
+    EventBus.on(
+      "builder-pannel-close",
+      () => this.setVisible(false),
+      this.scene,
+    );
     EventBus.on("modal-close", () => this.setVisible(false), this.scene);
 
     // Default behavior

@@ -6,4 +6,4 @@ export const DEFAULT_ACTION_COST = 5;
 
 // Packing
 
-export const WORK_BIT_COUNT = 8;
+export const WORK_BIT_COUNT = 6;

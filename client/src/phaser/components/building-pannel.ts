@@ -15,6 +15,7 @@ export default class BuildingPannel extends Phaser.GameObjects.Container {
   protected tool: Resource;
   protected fur: Resource;
   protected gold: Resource;
+  protected action: Resource;
   protected score: Resource;
   protected building: Phaser.GameObjects.Image;
   protected close: Command;
@@ -26,27 +27,122 @@ export default class BuildingPannel extends Phaser.GameObjects.Container {
   protected disabled: boolean = false;
   private buildingId: number = 0;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, handleClose: () => void) {
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    handleClose: () => void,
+  ) {
     super(scene, x, y);
 
     // Images
-    this.hitbox = new Phaser.GameObjects.Rectangle(scene, 0, 32, 320, 384, 0x000000, 0);
-    this.banner = new Phaser.GameObjects.Image(scene, 0, 0, "banner-v-up-w7-h5");
-    this.subbanner = new Phaser.GameObjects.Image(scene, 0, 192, "banner-up-w6-h3");
+    this.hitbox = new Phaser.GameObjects.Rectangle(
+      scene,
+      0,
+      32,
+      320,
+      384,
+      0x000000,
+      0,
+    );
+    this.banner = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      0,
+      "banner-v-up-w7-h5",
+    );
+    this.subbanner = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      192,
+      "banner-up-w6-h3",
+    );
     this.carved = new Phaser.GameObjects.Image(scene, 0, 0, "carved-w5-h3");
-    this.subcarved = new Phaser.GameObjects.Image(scene, 0, 192, "carved-w3-h1");
-    this.ribbon = new Phaser.GameObjects.Image(scene, 0, -128, "ribbon-w5-h1-yellow");
+    this.subcarved = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      192,
+      "carved-w3-h1",
+    );
+    this.ribbon = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -128,
+      "ribbon-w5-h1-yellow",
+    );
 
     // Commands
-    this.close = new Command(scene, 196, -64, "icon-close", "icon-close-pressed", { onRelease: handleClose });
-    this.pageOne = new Command(scene, -112, 264, "icon-one", "icon-one-pressed", { onRelease: () => this.handlePage(1), texture: "ribbon-w1-yellow-up", iconY: 26 });
-    this.pageTwo = new Command(scene, -56, 264, "icon-two", "icon-two-pressed", { onRelease: () => this.handlePage(2), texture: "ribbon-w1-yellow-up", iconY: 26 });
-    this.pageThree = new Command(scene, 0, 264, "icon-three", "icon-three-pressed", { onRelease: () => this.handlePage(3), texture: "ribbon-w1-yellow-up", iconY: 26 });
-    this.pageFour = new Command(scene, 56, 264, "icon-four", "icon-four-pressed", { onRelease: () => this.handlePage(4), texture: "ribbon-w1-yellow-up", iconY: 26 });
-    this.pageFive = new Command(scene, 112, 264, "icon-five", "icon-five-pressed", { onRelease: () => this.handlePage(5), texture: "ribbon-w1-yellow-up", iconY: 26 });
+    this.close = new Command(
+      scene,
+      196,
+      -64,
+      "icon-close",
+      "icon-close-pressed",
+      { onRelease: handleClose },
+    );
+    this.pageOne = new Command(
+      scene,
+      -112,
+      264,
+      "icon-one",
+      "icon-one-pressed",
+      {
+        onRelease: () => this.handlePage(1),
+        texture: "ribbon-w1-yellow-up",
+        iconY: 26,
+      },
+    );
+    this.pageTwo = new Command(
+      scene,
+      -56,
+      264,
+      "icon-two",
+      "icon-two-pressed",
+      {
+        onRelease: () => this.handlePage(2),
+        texture: "ribbon-w1-yellow-up",
+        iconY: 26,
+      },
+    );
+    this.pageThree = new Command(
+      scene,
+      0,
+      264,
+      "icon-three",
+      "icon-three-pressed",
+      {
+        onRelease: () => this.handlePage(3),
+        texture: "ribbon-w1-yellow-up",
+        iconY: 26,
+      },
+    );
+    this.pageFour = new Command(
+      scene,
+      56,
+      264,
+      "icon-four",
+      "icon-four-pressed",
+      {
+        onRelease: () => this.handlePage(4),
+        texture: "ribbon-w1-yellow-up",
+        iconY: 26,
+      },
+    );
+    this.pageFive = new Command(
+      scene,
+      112,
+      264,
+      "icon-five",
+      "icon-five-pressed",
+      {
+        onRelease: () => this.handlePage(5),
+        texture: "ribbon-w1-yellow-up",
+        iconY: 26,
+      },
+    );
 
     // Create label
-    this.label = new Phaser.GameObjects.Text(scene, 0, -136, 'Buildings', {
+    this.label = new Phaser.GameObjects.Text(scene, 0, -136, "Buildings", {
       fontFamily: "Norse",
       fontSize: 32,
       color: "#ffffff",
@@ -55,19 +151,75 @@ export default class BuildingPannel extends Phaser.GameObjects.Container {
     }).setOrigin(0.5, 0.5);
 
     // Resources
-    this.runestone = new Resource(scene, -160, -64, "ribbon-w4-h1-blue", "0", "icon-runestone");
+    this.runestone = new Resource(
+      scene,
+      -160,
+      -64,
+      "ribbon-w4-h1-blue",
+      "0",
+      "icon-runestone",
+    );
     this.runestone.flipX();
-    this.wood = new Resource(scene, -160, 0, "ribbon-w4-h1-blue", "0", "icon-wood");
+    this.wood = new Resource(
+      scene,
+      -160,
+      0,
+      "ribbon-w4-h1-blue",
+      "0",
+      "icon-wood",
+    );
     this.wood.flipX();
-    this.tool = new Resource(scene, -160, 64, "ribbon-w4-h1-blue", "0", "icon-tool");
+    this.tool = new Resource(
+      scene,
+      -160,
+      64,
+      "ribbon-w4-h1-blue",
+      "0",
+      "icon-tool",
+    );
     this.tool.flipX();
-    this.fur = new Resource(scene, -160, 128, "ribbon-w4-h1-blue", "0", "icon-fur");
+    this.fur = new Resource(
+      scene,
+      -160,
+      128,
+      "ribbon-w4-h1-blue",
+      "0",
+      "icon-fur",
+    );
     this.fur.flipX();
-    this.gold = new Resource(scene, 160, 0, "ribbon-w4-h1-red", "0", "icon-gold");
-    this.score = new Resource(scene, 160, 64, "ribbon-w4-h1-red", "0", "icon-score");
+    this.gold = new Resource(
+      scene,
+      160,
+      0,
+      "ribbon-w4-h1-red",
+      "0",
+      "icon-gold",
+    );
+    this.action = new Resource(
+      scene,
+      -128,
+      196,
+      "ribbon-w4-h1-red",
+      "1",
+      "icon-action",
+    );
+    this.action.flipX();
+    this.score = new Resource(
+      scene,
+      160,
+      64,
+      "ribbon-w4-h1-red",
+      "0",
+      "icon-score",
+    );
 
     // Add sprites
-    this.building = new Phaser.GameObjects.Image(scene, 0, -32, "building-house-blue");
+    this.building = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -32,
+      "building-house-blue",
+    );
 
     // Depths
     this.hitbox.setDepth(0);
@@ -76,6 +228,7 @@ export default class BuildingPannel extends Phaser.GameObjects.Container {
     this.tool.setDepth(1);
     this.fur.setDepth(1);
     this.gold.setDepth(1);
+    this.action.setDepth(1);
     this.score.setDepth(1);
     this.close.setDepth(1);
     this.pageOne.setDepth(1);
@@ -114,8 +267,9 @@ export default class BuildingPannel extends Phaser.GameObjects.Container {
     this.add(this.tool);
     this.add(this.fur);
     this.add(this.gold);
+    this.add(this.action);
     this.add(this.score);
-    this.sort('depth');
+    this.sort("depth");
   }
 
   update() {

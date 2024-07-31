@@ -2,6 +2,8 @@ import { useRef } from "react";
 
 import { PhaserGame } from "@/phaser/PhaserGame";
 import { useActions } from "./hooks/useActions";
+import { Header } from "./ui/containers/Header";
+import { ThemeProvider } from "./ui/elements/theme-provider";
 
 function App() {
   const phaserRef = useRef(null);
@@ -9,8 +11,10 @@ function App() {
 
   return (
     <div id="app" className="flex flex-col items-center">
-      <div className="text-4xl font-bold">Midgard</div>
-      <PhaserGame ref={phaserRef} currentActiveScene={undefined} />
+      <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+        <Header />
+        <PhaserGame ref={phaserRef} currentActiveScene={undefined} />
+      </ThemeProvider>
     </div>
   );
 }

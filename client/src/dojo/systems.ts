@@ -33,7 +33,7 @@ export function systems({
       label: "View",
       onClick: () =>
         window.open(
-          `https://worlds.dev/networks/slot/worlds/zkube/txs/${transaction_hash}`,
+          `https://worlds.dev/networks/slot/worlds/midgard/txs/${transaction_hash}`,
         ),
     };
   };
@@ -118,30 +118,30 @@ export function systems({
       "Game has been started.",
     );
   };
-  
+
   const hire = async ({ account, ...props }: SystemTypes.Hire) => {
     await handleTransaction(
       account,
       () => client.actions.hire({ account, ...props }),
       "Builder has been hired.",
     );
-  }
-  
+  };
+
   const select = async ({ account, ...props }: SystemTypes.Select) => {
     await handleTransaction(
       account,
       () => client.actions.select({ account, ...props }),
       "Building has been selected.",
     );
-  }
-  
+  };
+
   const send = async ({ account, ...props }: SystemTypes.Send) => {
     await handleTransaction(
       account,
       () => client.actions.send({ account, ...props }),
       "Builder have been sent.",
     );
-  }
+  };
 
   const buy = async ({ account, ...props }: SystemTypes.Buy) => {
     await handleTransaction(
@@ -149,7 +149,15 @@ export function systems({
       () => client.actions.buy({ account, ...props }),
       "Action points have been bought.",
     );
-  }
+  };
+
+  const sell = async ({ account, ...props }: SystemTypes.Sell) => {
+    await handleTransaction(
+      account,
+      () => client.actions.sell({ account, ...props }),
+      "Action points have been sold.",
+    );
+  };
 
   return {
     signup,
@@ -159,5 +167,6 @@ export function systems({
     select,
     send,
     buy,
+    sell,
   };
 }

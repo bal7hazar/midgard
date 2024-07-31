@@ -17,32 +17,47 @@ export default class BuidlerMenu extends Phaser.GameObjects.Container {
     super(scene, x, y);
 
     // Images
-    this.banner = new Phaser.GameObjects.Image(scene, 0, 0, "banner-right-w4-h4");
-    this.carved = new Phaser.GameObjects.Image(scene, 0, 0, "carved-w2-h2");
-    this.ribbon = new Phaser.GameObjects.Image(scene, 32, 96, "ribbon-w5-h1-yellow");
+    this.banner = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      0,
+      "banner-right-w4-h4",
+    ).setOrigin(0.5, 1);
+    this.carved = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -64,
+      "carved-w2-h2",
+    ).setOrigin(0.5, 1);
+    this.ribbon = new Phaser.GameObjects.Image(
+      scene,
+      32,
+      0,
+      "ribbon-w5-h1-yellow",
+    ).setOrigin(0.5, 1);
 
     // Create label
-    this.label = new Phaser.GameObjects.Text(scene, 0, 88, 'Workers', {
+    this.label = new Phaser.GameObjects.Text(scene, 0, -20, "Workers", {
       fontFamily: "Norse",
       fontSize: 32,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
-    }).setOrigin(0.5, 0.5);
+    }).setOrigin(0.5, 1);
 
     // Add sprites
-    this.worker1 = scene.add.sprite(-32, -32, "pawn-blue");
+    this.worker1 = scene.add.sprite(-32, -64, "pawn-blue").setOrigin(0.5, 1);
     this.worker1.flipX = true;
     this.worker1.play("pawn-blue-idle");
 
-    this.worker2 = scene.add.sprite(-32, 32, "pawn-purple");
+    this.worker2 = scene.add.sprite(-32, 0, "pawn-purple").setOrigin(0.5, 1);
     this.worker2.flipX = true;
     this.worker2.play("pawn-purple-cut");
 
-    this.worker3 = scene.add.sprite(32, -32, "pawn-yellow");
+    this.worker3 = scene.add.sprite(32, -64, "pawn-yellow").setOrigin(0.5, 1);
     this.worker3.play("pawn-yellow-hit");
 
-    this.worker4 = scene.add.sprite(32, 32, "pawn-red");
+    this.worker4 = scene.add.sprite(32, 0, "pawn-red").setOrigin(0.5, 1);
     this.worker4.play("pawn-red-move");
 
     // Interactions
@@ -54,7 +69,7 @@ export default class BuidlerMenu extends Phaser.GameObjects.Container {
     this.banner.on("pointerout", this.leave, this);
 
     // Selector
-    this.selector = new Selector(scene, 0, 0, 128, 128);
+    this.selector = new Selector(scene, 0, -128, 128, 128);
 
     // Depths
     this.banner.setDepth(1);
@@ -77,7 +92,7 @@ export default class BuidlerMenu extends Phaser.GameObjects.Container {
     this.add(this.worker2);
     this.add(this.worker3);
     this.add(this.worker4);
-    this.sort('depth')
+    this.sort("depth");
 
     // Default behavior
     this.worker1.anims.pause();

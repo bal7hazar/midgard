@@ -48,4 +48,4 @@ export const Expert: BuilderInterface = class Expert {
         return new Resource(0, 0, 0, 0);
     }
   }
-}
+};

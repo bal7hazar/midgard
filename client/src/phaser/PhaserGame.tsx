@@ -3,7 +3,7 @@ import StartGame from "./main";
 import { EventBus } from "./EventBus";
 
 export const PhaserGame = forwardRef(function PhaserGame(
-  { currentActiveScene } : { currentActiveScene: Function | undefined },
+  { currentActiveScene }: { currentActiveScene: Function | undefined },
   ref: any,
 ) {
   const game = useRef<Phaser.Game | undefined>(undefined);

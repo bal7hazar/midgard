@@ -7,14 +7,42 @@ export default class Selector extends Phaser.GameObjects.Container {
   protected southeast: Phaser.GameObjects.Image;
   private forced: boolean = false;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, width: number, height: number) {
+  constructor(
+    scene: Phaser.Scene,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    originX?: number,
+    originY?: number,
+  ) {
     super(scene, x, y);
 
     // Create button
-    this.northwest = new Phaser.GameObjects.Image(scene, -width / 2, -height / 2, 'selector-nw').setScale(1.2);
-    this.northeast = new Phaser.GameObjects.Image(scene, width / 2, -height / 2, 'selector-ne').setScale(1.2);
-    this.southwest = new Phaser.GameObjects.Image(scene, -width / 2, height / 2, 'selector-sw').setScale(1.2);
-    this.southeast = new Phaser.GameObjects.Image(scene, width / 2, height / 2, 'selector-se').setScale(1.2);
+    this.northwest = new Phaser.GameObjects.Image(
+      scene,
+      -width / 2,
+      -height / 2,
+      "selector-nw",
+    ).setScale(1.2);
+    this.northeast = new Phaser.GameObjects.Image(
+      scene,
+      width / 2,
+      -height / 2,
+      "selector-ne",
+    ).setScale(1.2);
+    this.southwest = new Phaser.GameObjects.Image(
+      scene,
+      -width / 2,
+      height / 2,
+      "selector-sw",
+    ).setScale(1.2);
+    this.southeast = new Phaser.GameObjects.Image(
+      scene,
+      width / 2,
+      height / 2,
+      "selector-se",
+    ).setScale(1.2);
 
     // Effects
     this.scene.tweens.add({
@@ -25,6 +53,14 @@ export default class Selector extends Phaser.GameObjects.Container {
       yoyo: true,
       repeat: -1,
     });
+
+    // Set origin
+    if (originX !== undefined && originY !== undefined) {
+      this.northwest.setOrigin(originX, originY);
+      this.northeast.setOrigin(originX, originY);
+      this.southwest.setOrigin(originX, originY);
+      this.southeast.setOrigin(originX, originY);
+    }
 
     // Add components to container
     this.add(this.northwest);
@@ -39,6 +75,7 @@ export default class Selector extends Phaser.GameObjects.Container {
   update() {}
 
   setForced(status: boolean) {
+    this.setEnable(status);
     this.forced = status;
     this.setEnable(status);
   }
@@ -46,7 +83,7 @@ export default class Selector extends Phaser.GameObjects.Container {
   setEnable(status: boolean) {
     if (this.forced) return;
     // Disable tweens
-    if (!status) {
+    if (!status || this.forced) {
       this.northwest.setVisible(false);
       this.northeast.setVisible(false);
       this.southwest.setVisible(false);

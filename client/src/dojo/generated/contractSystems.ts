@@ -35,6 +35,10 @@ export interface Buy extends Signer {
   quantity: number;
 }
 
+export interface Sell extends Signer {
+  quantity: number;
+}
+
 export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
 
 export const getContractByName = (manifest: any, name: string) => {
@@ -181,6 +185,23 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
       }
     };
 
+    const sell = async ({ account, quantity }: Sell) => {
+      try {
+        return await provider.execute(
+          account,
+          {
+            contractName: contract_name,
+            entrypoint: "sell",
+            calldata: [provider.getWorldAddress(), quantity],
+          },
+          details,
+        );
+      } catch (error) {
+        console.error("Error executing sell:", error);
+        throw error;
+      }
+    };
+
     return {
       address: contract.address,
       signup,
@@ -190,6 +211,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
       select,
       send,
       buy,
+      sell,
     };
   }
 

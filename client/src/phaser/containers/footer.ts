@@ -10,13 +10,13 @@ export default class Footer extends Phaser.GameObjects.Container {
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
 
-    this.construction = new ConstructionMenu(scene, 0, 32);
-    this.construction.setScrollFactor(0, 0);  
+    this.construction = new ConstructionMenu(scene, 0, 0);
+    this.construction.setScrollFactor(0, 0);
 
-    this.builder = new BuidlerMenu(scene, -288, 0);
+    this.builder = new BuidlerMenu(scene, -288, -32);
     this.builder.setScrollFactor(0, 0);
 
-    this.building = new BuildingMenu(scene, 288, 0);
+    this.building = new BuildingMenu(scene, 288, -32);
     this.building.setScrollFactor(0, 0);
 
     // Add components to container

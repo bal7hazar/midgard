@@ -1,7 +1,7 @@
 import Buy from "../actions/buy";
 import Command from "../elements/command";
 import { EventBus } from "../EventBus";
-import ShopManager from "../managers/shop";
+import ShopManager from "../managers/buy";
 
 export default class ActionShop extends Phaser.GameObjects.Container {
   protected hitbox: Phaser.GameObjects.Rectangle;
@@ -24,21 +24,75 @@ export default class ActionShop extends Phaser.GameObjects.Container {
     super(scene, x, y);
 
     // Geometries
-    this.hitbox = new Phaser.GameObjects.Rectangle(scene, 0, 0, 288, 256, 0x000000, 0);
+    this.hitbox = new Phaser.GameObjects.Rectangle(
+      scene,
+      0,
+      0,
+      288,
+      256,
+      0x000000,
+      0,
+    );
 
     // Images
     this.banner = new Phaser.GameObjects.Image(scene, 0, 0, "banner-v-w7-h4");
     this.carved = new Phaser.GameObjects.Image(scene, 0, 32, "carved-w3-h1");
-    this.leftCarved = new Phaser.GameObjects.Image(scene, -96, -32, "carved-w2-h1");
-    this.rightCarved = new Phaser.GameObjects.Image(scene, 96, -32, "carved-w2-h1");
-    this.ribbon = new Phaser.GameObjects.Image(scene, 0, -96, "ribbon-w4-h1-yellow");
-    this.goldIcon = new Phaser.GameObjects.Image(scene, -128, -32, "icon-gold").setDisplaySize(24, 24);
-    this.actionIcon = new Phaser.GameObjects.Image(scene, 128, -32, "icon-action").setDisplaySize(24, 24);
+    this.leftCarved = new Phaser.GameObjects.Image(
+      scene,
+      -96,
+      -32,
+      "carved-w2-h1",
+    );
+    this.rightCarved = new Phaser.GameObjects.Image(
+      scene,
+      96,
+      -32,
+      "carved-w2-h1",
+    );
+    this.ribbon = new Phaser.GameObjects.Image(
+      scene,
+      0,
+      -96,
+      "ribbon-w4-h1-yellow",
+    );
+    this.goldIcon = new Phaser.GameObjects.Image(
+      scene,
+      -128,
+      -32,
+      "icon-gold",
+    ).setDisplaySize(24, 24);
+    this.actionIcon = new Phaser.GameObjects.Image(
+      scene,
+      128,
+      -32,
+      "icon-action",
+    ).setDisplaySize(24, 24);
 
     // Commands
-    this.close = new Command(scene, 196, -32, "icon-close", "icon-close-pressed", { onRelease: () => this.handleClose() });
-    this.after = new Command(scene, 196, 32, "icon-right", "icon-right-pressed", { onRelease: () => this.handleAdd() });
-    this.before = new Command(scene, -196, 32, "icon-left", "icon-left-pressed", { onRelease: () => this.handleSub() });
+    this.close = new Command(
+      scene,
+      196,
+      -32,
+      "icon-close",
+      "icon-close-pressed",
+      { onRelease: () => this.handleClose() },
+    );
+    this.after = new Command(
+      scene,
+      196,
+      32,
+      "icon-right",
+      "icon-right-pressed",
+      { onRelease: () => this.handleAdd() },
+    );
+    this.before = new Command(
+      scene,
+      -196,
+      32,
+      "icon-left",
+      "icon-left-pressed",
+      { onRelease: () => this.handleSub() },
+    );
     this.before.flipX();
 
     // Create labels
@@ -51,21 +105,27 @@ export default class ActionShop extends Phaser.GameObjects.Container {
       strokeThickness: 6,
     }).setOrigin(0.5, 0.5);
     const action = ShopManager.getInstance().getAction();
-    this.actionLabel = new Phaser.GameObjects.Text(scene, 80, -32, `${action}`, {
-      fontFamily: "Norse",
-      fontSize: 38,
-      color: "#ffffff",
-      stroke: "#000000",
-      strokeThickness: 6,
-    }).setOrigin(0.5, 0.5);
-    this.title = new Phaser.GameObjects.Text(scene, 0, -104, 'Shop', {
+    this.actionLabel = new Phaser.GameObjects.Text(
+      scene,
+      80,
+      -32,
+      `${action}`,
+      {
+        fontFamily: "Norse",
+        fontSize: 38,
+        color: "#ffffff",
+        stroke: "#000000",
+        strokeThickness: 6,
+      },
+    ).setOrigin(0.5, 0.5);
+    this.title = new Phaser.GameObjects.Text(scene, 0, -104, "Action Shop", {
       fontFamily: "Norse",
       fontSize: 32,
       color: "#ffffff",
       stroke: "#000000",
       strokeThickness: 8,
     }).setOrigin(0.5, 0.5);
-    const label = new Phaser.GameObjects.Text(scene, 0, -32, '>', {
+    const label = new Phaser.GameObjects.Text(scene, 0, -32, ">", {
       fontFamily: "Norse",
       fontSize: 48,
       color: "#ffffff",
@@ -115,10 +175,14 @@ export default class ActionShop extends Phaser.GameObjects.Container {
     this.add(this.goldIcon);
     this.add(this.actionIcon);
     this.add(label);
-    this.sort('depth')
+    this.sort("depth");
 
     // Events
-    EventBus.on("action-shop-visibility", () => this.setVisible(!this.visible), this.scene);
+    EventBus.on(
+      "action-shop-visibility",
+      () => this.setVisible(!this.visible),
+      this.scene,
+    );
     EventBus.on("action-shop-close", () => this.setVisible(false), this.scene);
     EventBus.on("modal-close", () => this.setVisible(false), this.scene);
 
@@ -131,13 +195,16 @@ export default class ActionShop extends Phaser.GameObjects.Container {
 
     if (!this.after.disabled && !ShopManager.getInstance().canIncrease()) {
       this.after.setEnable(false);
-    } else if (this.after.disabled && ShopManager.getInstance().canIncrease()){
+    } else if (this.after.disabled && ShopManager.getInstance().canIncrease()) {
       this.after.setEnable(true);
     }
-    
+
     if (!this.before.disabled && !ShopManager.getInstance().canDecrease()) {
       this.before.setEnable(false);
-    } else if (this.before.disabled && ShopManager.getInstance().canDecrease()) {
+    } else if (
+      this.before.disabled &&
+      ShopManager.getInstance().canDecrease()
+    ) {
       this.before.setEnable(true);
     }
 

@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x21b5f201203c74cf00484ae4fe09fc01ed8f57fe1de8e428d8e629aa609ae1"
-original_class_hash = "0x21b5f201203c74cf00484ae4fe09fc01ed8f57fe1de8e428d8e629aa609ae1"
+class_hash = "0x6f05ce67121b11889a174816cda605a117fc7dce360edd8a5f39cbe11422a9b"
+original_class_hash = "0x6f05ce67121b11889a174816cda605a117fc7dce360edd8a5f39cbe11422a9b"
 base_class_hash = "0x0"
 abi = "manifests/dev/abis/base/contracts/midgard_systems_actions_actions.json"
 reads = []

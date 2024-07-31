@@ -47,8 +47,8 @@ export class Builder {
         return "Apprentice";
       case BuilderType.Worker:
         return "Laborer";
-        case BuilderType.Expert:
-          return "Expert";
+      case BuilderType.Expert:
+        return "Expert";
       case BuilderType.Master:
         return "Master";
       default:

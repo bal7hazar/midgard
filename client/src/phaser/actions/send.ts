@@ -12,12 +12,15 @@ export default class Send extends Button {
   }
 
   update() {
-    if (this.visible && (!PlayerManager.getInstance().player || !GameManager.getInstance().game)) {
+    if (
+      this.visible &&
+      (!PlayerManager.getInstance().player || !GameManager.getInstance().game)
+    ) {
       this.setVisible(false);
-    } else if (!this.disabled && false) {
+    } else if (!this.disabled && !GameManager.getInstance().canSend()) {
       this.setEnable(false);
       this.setVisible(true);
-    } else if (this.disabled && true) {
+    } else if (this.disabled && GameManager.getInstance().canSend()) {
       this.setEnable(true);
       this.setVisible(true);
     }
@@ -25,6 +28,7 @@ export default class Send extends Button {
   }
 
   release(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Image) {
+    if (!this.pressed) return;
     super.release(pointer, gameObject);
     if (this.disabled) return;
     GameManager.getInstance().callSend();

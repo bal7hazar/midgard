@@ -12,7 +12,10 @@ export default class Hire extends Button {
   }
 
   update() {
-    if (this.visible && (!PlayerManager.getInstance().player || !GameManager.getInstance().game)) {
+    if (
+      this.visible &&
+      (!PlayerManager.getInstance().player || !GameManager.getInstance().game)
+    ) {
       this.setVisible(false);
     } else if (!this.disabled && false) {
       this.setEnable(false);
@@ -25,6 +28,7 @@ export default class Hire extends Button {
   }
 
   release(pointer: Phaser.Input.Pointer, gameObject: Phaser.GameObjects.Image) {
+    if (!this.pressed) return;
     super.release(pointer, gameObject);
     if (this.disabled) return;
     GameManager.getInstance().callHire();

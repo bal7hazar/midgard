@@ -32,4 +32,4 @@ export const Master: BuilderInterface = class Master {
         return new Resource(0, 0, 0, 0);
     }
   }
-}
+};

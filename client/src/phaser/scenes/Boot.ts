@@ -5,8 +5,7 @@ export class Boot extends Scene {
     super("Boot");
   }
 
-  preload() {
-  }
+  preload() {}
 
   create() {
     this.input.setDefaultCursor("url(assets/UI/Pointers/01.png), pointer");

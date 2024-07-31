@@ -12,7 +12,7 @@ struct Resource {
 
 #[generate_trait]
 impl ResourceImpl of ResourceTrait {
-    fn new(fur: u8, wood: u8, runestone: u8, tools: u8) -> Resource {
+    fn new(runestone: u8, wood: u8, tools: u8, fur: u8) -> Resource {
         Resource { runestone: runestone, wood: wood, tools: tools, fur: fur }
     }
 }
@@ -95,5 +95,21 @@ impl ResourcePartialEq of core::PartialEq<Resource> {
             || lhs.wood != rhs.wood
             || lhs.runestone != rhs.runestone
             || lhs.tools != rhs.tools
+    }
+}
+
+impl ResourcePrint of core::debug::PrintTrait<Resource> {
+    #[inline]
+    fn print(self: Resource) {
+        let mut string: felt252 = 'R { ';
+        string = string * 256 + self.runestone.into() + 0x30;
+        string = string * 256 * 256 * 256 + ' ; ';
+        string = string * 256 + self.wood.into() + 0x30;
+        string = string * 256 * 256 * 256 + ' ; ';
+        string = string * 256 + self.tools.into() + 0x30;
+        string = string * 256 * 256 * 256 + ' ; ';
+        string = string * 256 + self.fur.into() + 0x30;
+        string = string * 256 * 256 + ' }';
+        string.print();
     }
 }
