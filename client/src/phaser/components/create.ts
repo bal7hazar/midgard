@@ -7,8 +7,8 @@ export default class Create extends Phaser.GameObjects.Container {
   protected carved: Phaser.GameObjects.Image;
   protected button: Phaser.GameObjects.Container;
   protected label: Phaser.GameObjects.Text;
-  protected username: Phaser.GameObjects.Text;
   protected disabled: boolean = false;
+  public username: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene, x: number, y: number) {
     super(scene, x, y);
@@ -54,6 +54,7 @@ export default class Create extends Phaser.GameObjects.Container {
   }
 
   update() {
+    PlayerManager.getInstance().setUsername(this.username.text);
     if (this.visible && !!PlayerManager.getInstance().player) {
       this.setVisible(false);
     } else if (!this.visible && !PlayerManager.getInstance().player) {

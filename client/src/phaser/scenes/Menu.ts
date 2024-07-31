@@ -1,22 +1,21 @@
 import { EventBus } from "../EventBus";
 import { Scene } from "phaser";
-import AnimationManager from "../managers/animation";
 import Start from "../actions/start";
 import Credits from "../actions/credits";
 import Create from "../components/create";
-import AudioManager from "../managers/audio";
 import GameManager from "../managers/game";
 
 export const BACKGROUND_HEIGHT = 816;
 export const BACKGROUND_WIDTH = 2892;
 
 export class Menu extends Scene {
+  rexUI: any;
   title: Phaser.GameObjects.Text | null = null;
   label: Phaser.GameObjects.Text | null = null;
   pawnLeft: Phaser.GameObjects.Sprite | null = null;
   pawnRight: Phaser.GameObjects.Sprite | null = null;
   background: Phaser.GameObjects.TileSprite | null = null;
-  signup: Phaser.GameObjects.Container | null = null;
+  signup: Create | null = null;
   start: Phaser.GameObjects.Container | null = null;
   credits: Phaser.GameObjects.Container | null = null;
 
@@ -97,6 +96,10 @@ export class Menu extends Scene {
       this.renderer.width / 2,
       this.renderer.height / 2 + 100,
     );
+
+    this.signup.username.setInteractive().on("pointerdown", () => {
+      this.rexUI.edit(this.signup!.username);
+    });
     this.add.existing(this.signup);
 
     this.start = new Start(

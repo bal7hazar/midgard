@@ -4,6 +4,7 @@ import { GameOver } from "./scenes/GameOver";
 import { Menu } from "./scenes/Menu";
 import Phaser from "phaser";
 import { Preloader } from "./scenes/Preloader";
+import RexUIPlugin from "phaser3-rex-plugins/templates/ui/ui-plugin";
 
 export const app = {
   width: 0,
@@ -12,6 +13,9 @@ export const app = {
 
 const config = {
   parent: "game-container",
+  dom: {
+    createContainer: true,
+  },
   backgroundColor: 0xeeeeee,
   banner: false,
   type: Phaser.AUTO,
@@ -33,6 +37,15 @@ const config = {
       width: 1920,
       height: 816,
     },
+  },
+  plugins: {
+    scene: [
+      {
+        key: "rexUI",
+        plugin: RexUIPlugin,
+        mapping: "rexUI",
+      },
+    ],
   },
 };
 
