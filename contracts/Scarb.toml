@@ -26,8 +26,8 @@ private_key = "0x1c9053c053edf324aec366a34c6901b1095b07af69495bffec7d7fe21effb1b
 
 [profile.slot.tool.dojo.env]
 rpc_url = "https://api.cartridge.gg/x/midgard/katana"
-account_address = ""
-private_key = ""
+account_address = "0x374354ffc6b74bd429642dd28862c4c310bcaf91add166d7cf5fafbc75d68a7"
+private_key = "0x124478135fa87c2eeacaeb36161c01d1be99f3b3727260fa79b17392c1f4aba"
 
 [profile.sepolia.tool.dojo.env]
 rpc_url = "https://starknet-sepolia.public.blastapi.io/rpc/v0_7"

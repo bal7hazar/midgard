@@ -1,0 +1,10 @@
+kind = "DojoContract"
+class_hash = "0x5285f57dcc4cba12c9672f416775d8763c429dcb378edc5dba9c69ee2823dce"
+original_class_hash = "0x5285f57dcc4cba12c9672f416775d8763c429dcb378edc5dba9c69ee2823dce"
+base_class_hash = "0x0"
+abi = "manifests/slot/abis/base/contracts/midgard_systems_actions_actions.json"
+reads = []
+writes = []
+computed = []
+init_calldata = []
+name = "midgard::systems::actions::actions"

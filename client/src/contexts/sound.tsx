@@ -19,7 +19,7 @@ export const SoundPlayerProvider = ({
     account: { account },
   } = useDojo();
   const { player } = usePlayer({ playerId: account.address });
-  const { game } = useGame({ gameId: player?.game_id });
+  const { game } = useGame({ gameId: player?.gameId });
 
   useEffect(() => {
     setTheme(!game || game.isOver());
