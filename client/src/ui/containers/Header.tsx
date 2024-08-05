@@ -63,7 +63,7 @@ export const Header = () => {
             {player.name}
           </p>
         )}
-        {/* <ModeToggle /> */}
+        <ModeToggle />
         <Leaderboard />
         <Sheet>
           <SheetTrigger asChild className="cursor-pointer">
